@@ -486,12 +486,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
         try {
-          // Submit to Google Sheets (Sheet 2)
+          // 1. Submit to Google Sheets (Backup)
           await fetch(GOOGLE_SHEET_WEBHOOK, {
             method: 'POST',
             mode: 'no-cors',
             body: formData
           });
+
+          // 2. Submit to Brevo (Automated Email Delivery)
+          // NOTE: For security, it's recommended to move this to a serverless function
+          const email = formData.get('email');
+          const firstName = formData.get('firstName') || 'Reader';
+          const BREVO_API_KEY = 'YOUR_BREVO_API_KEY'; // REPLACE WITH YOUR API KEY
+          const BREVO_LIST_ID = 3; // REPLACE WITH YOUR BREVO LIST ID (e.g., Toolkits list)
+
+          if (BREVO_API_KEY !== 'YOUR_BREVO_API_KEY') {
+              await fetch('https://api.brevo.com/v3/contacts', {
+                  method: 'POST',
+                  headers: {
+                      'accept': 'application/json',
+                      'api-key': BREVO_API_KEY,
+                      'content-type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      email: email,
+                      attributes: { FIRSTNAME: firstName },
+                      listIds: [BREVO_LIST_ID],
+                      updateEnabled: true
+                  })
+              });
+          }
 
           // Show success view
           toolkitForm.style.display = 'none';
