@@ -13,14 +13,8 @@
     <meta property="og:url" content="https://www.tomoclub.org/leaders-of-tomorrow.html">
     <meta property="og:title" content="Leaders of Tomorrow — Ebook | TomoClub">
     <meta property="og:description" content="15 school leaders share honest insights on what it takes to lead future-ready schools in an AI world.">
-    <meta property="og:image" content="https://www.tomoclub.org/assets/leaders-ebook-v2.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.tomoclub.org/leaders-of-tomorrow.html">
-    <meta property="twitter:title" content="Leaders of Tomorrow — Ebook | TomoClub">
-    <meta property="twitter:description" content="15 school leaders share honest insights on what it takes to lead future-ready schools in an AI world.">
-    <meta property="twitter:image" content="https://www.tomoclub.org/assets/leaders-ebook-v2.png">
+    <meta property="og:image" content="https://www.tomoclub.org/assets/leaders-ebook-v3.png">
+    <meta property="twitter:image" content="https://www.tomoclub.org/assets/leaders-ebook-v3.png">
 
     <title>Leaders of Tomorrow — Ebook | TomoClub</title>
 
@@ -99,7 +93,7 @@
             pointer-events: none;
         }
 
-        /* Replicating the Floating Pill Nav */
+        /* Replicating the Floating Pill Nav - Aesthetic Refinement */
         nav {
             position: fixed;
             top: 1.5rem;
@@ -108,14 +102,21 @@
             width: calc(100% - 4rem);
             max-width: 1200px;
             z-index: 1000;
-            padding: 0.6rem 1.5rem;
-            background: rgba(15, 23, 42, 0.85); /* Dark-mode style glass */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 0.75rem 1.5rem;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
             border-radius: 999px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        nav.scrolled {
+            top: 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 0.6rem 1.5rem;
         }
 
         .nav-container {
@@ -539,7 +540,7 @@
                     </div>
                 </div>
                 <div class="ebook-cover-container animate-on-scroll" style="transition-delay: 0.2s;">
-                    <img src="assets/leaders-ebook-v2.png" alt="Leaders of Tomorrow Ebook Cover" class="ebook-cover">
+                    <img src="assets/leaders-ebook-v3.png" alt="Leaders of Tomorrow Ebook Cover" class="ebook-cover">
                 </div>
             </div>
         </div>

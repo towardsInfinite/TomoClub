@@ -38,6 +38,10 @@ const seoData = {
   '#guides': {
     title: 'Guides & Toolkits for School Leaders | TomoClub',
     description: 'Download practical roadmaps, SEL toolkits, and activation guides for your school district. Built by practitioners for future-ready education.'
+  },
+  '#signup': {
+    title: 'Get Started with TomoClub | Request a Pilot',
+    description: 'Ready to bring future-ready skills to your school? Contact our team to design a pilot program for your district.'
   }
 };
 
@@ -540,6 +544,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+  }
+
+  // Main Signup Form Logic (Vercel API)
+  const mainSignupForm = document.getElementById('main-signup-form');
+  const signupMsgContainer = document.getElementById('signup-message-container');
+  const signupSuccessView = document.getElementById('signup-success-view');
+
+  if (mainSignupForm) {
+    mainSignupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(mainSignupForm);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        message: `${formData.get('message')}${formData.get('message_extra') ? ' | Notes: ' + formData.get('message_extra') : ''}`
+      };
+
+      const submitBtn = mainSignupForm.querySelector('button');
+      const originalText = submitBtn.innerHTML;
+
+      // UI Loading State
+      submitBtn.innerHTML = 'Sending Request... <i data-lucide="loader" class="spin"></i>';
+      submitBtn.disabled = true;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      
+      signupMsgContainer.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Success
+          mainSignupForm.style.display = 'none';
+          signupSuccessView.style.display = 'block';
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        } else {
+          // API Error
+          throw new Error(result.error || 'Something went wrong.');
+        }
+      } catch (error) {
+        console.error('Signup Error:', error);
+        signupMsgContainer.style.display = 'block';
+        signupMsgContainer.style.background = 'rgba(179, 65, 88, 0.1)';
+        signupMsgContainer.style.color = 'var(--crimson)';
+        signupMsgContainer.style.border = '1px solid rgba(179, 65, 88, 0.2)';
+        signupMsgContainer.innerText = error.message || 'Unable to send request. Please try again later.';
+        
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    });
   }
 
 });
