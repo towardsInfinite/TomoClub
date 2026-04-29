@@ -589,15 +589,22 @@ document.addEventListener('DOMContentLoaded', () => {
       signupMsgContainer.style.display = 'none';
 
       try {
+        // Prepare data for Google Sheets
+        const sheetData = new URLSearchParams();
+        sheetData.append('name', formData.get('name'));
+        sheetData.append('email', formData.get('email'));
+        sheetData.append('phone', phoneVal);
+        sheetData.append('message', `${formData.get('message')}${formData.get('message_extra') ? ' | Notes: ' + formData.get('message_extra') : ''}`);
+
         // 1. Submit to Google Sheets (Web App URL)
-        // We use the same webhook as toolkits or the specific one for signups
         await fetch(GOOGLE_SHEET_WEBHOOK, {
           method: 'POST',
           mode: 'no-cors',
-          body: formData
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: sheetData
         });
 
-        // 2. Submit to Vercel API (Backup - wrap in try/catch to avoid blocking success if it fails)
+        // 2. Submit to Vercel API (Backup)
         try {
           await fetch('/api/signup', {
             method: 'POST',
