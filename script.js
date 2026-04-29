@@ -45,7 +45,8 @@ const seoData = {
   }
 };
 
-const GOOGLE_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzz2VpoSdbCDsfGo4-3O6KnnjsEHUaMHuCCUN0KsQyBatGz_EMc-xdFC5FnvlKBWb40/exec';
+const SIGNUP_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzz2VpoSdbCDsfGo4-3O6KnnjsEHUaMHuCCUN0KsQyBatGz_EMc-xdFC5FnvlKBWb40/exec';
+const RESOURCE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwFuKr-0GwdBfPylk7pmIhcbQX401Qye5t61ZsrjfbQ6TUToblKfX-l2bzv5DAFKuxc/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Announcement Banner Logic
@@ -490,8 +491,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
         try {
-          // 1. Submit to Google Sheets (Backup)
-          await fetch(GOOGLE_SHEET_WEBHOOK, {
+          // 1. Submit to Google Sheets (Resources/Old Sheet)
+          await fetch(RESOURCE_WEBHOOK, {
             method: 'POST',
             mode: 'no-cors',
             body: formData
@@ -596,8 +597,8 @@ document.addEventListener('DOMContentLoaded', () => {
         sheetData.append('phone', phoneVal);
         sheetData.append('message', `${formData.get('message')}${formData.get('message_extra') ? ' | Notes: ' + formData.get('message_extra') : ''}`);
 
-        // 1. Submit to Google Sheets (Web App URL)
-        await fetch(GOOGLE_SHEET_WEBHOOK, {
+        // 1. Submit to Google Sheets (Signup/New Sheet)
+        await fetch(SIGNUP_WEBHOOK, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
