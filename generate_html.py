@@ -89,8 +89,14 @@ for i, vid in enumerate(ids):
                             <i data-lucide="play-circle" style="color: white; width: 48px; height: 48px; opacity: 0.8;"></i>
                         </div>
                     </div>
-                    <h3>{title}</h3>
-                    <span>Play Now <i data-lucide="play" style="width: 14px; height: 14px;"></i></span>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.75rem; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                        <span>Episode {i+1}</span>
+                        <span>•</span>
+                        <span>2026</span>
+                    </div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 0.75rem;">{title}</h3>
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.5;">Explore deep insights into the future of education and AI literacy.</p>
+                    <span style="font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 0.5rem;">Listen Now <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></span>
                 </a>\n'''
 html_str += '            </div>'
 

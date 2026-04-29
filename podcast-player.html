@@ -55,11 +55,30 @@
             grid-template-columns: 2fr 1fr;
             gap: 4rem;
             align-items: start;
+            margin-top: 2rem;
+        }
+        .description-section {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 32px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-sm);
         }
         @media (max-width: 992px) {
             .episode-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
+            }
+            .episode-meta {
+                flex-direction: column;
+                align-items: flex-start !important;
+                width: 100% !important;
+            }
+            .episode-meta div[style*="width: 1px"] {
+                display: none;
+            }
+            .description-section {
+                padding: 1.5rem;
             }
         }
         .description-body h3 {
@@ -113,17 +132,19 @@
                 <a href="index.html#podcast" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--teal); font-weight: 600; margin-bottom: 2rem; transition: transform 0.3s ease;">
                     <i data-lucide="arrow-left" style="width: 18px;"></i> Back to All Episodes
                 </a>
-                <h1 id="episode-title" style="font-size: 3.5rem; margin-bottom: 1.5rem;">Loading Episode...</h1>
+                <h1 id="episode-title" style="font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.1;">Loading Episode...</h1>
                 
-                <div class="episode-meta">
+                <div class="episode-meta" style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--card-border); display: inline-flex; width: auto; margin-bottom: 3rem;">
                     <div class="meta-item">
-                        <i data-lucide="user"></i> <span id="episode-speaker">Speaker Name</span>
+                        <i data-lucide="user"></i> <strong style="color: var(--navy); margin-right: 0.25rem;">Speaker:</strong> <span id="episode-speaker">Speaker Name</span>
                     </div>
+                    <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 1rem;"></div>
                     <div class="meta-item">
-                        <i data-lucide="calendar"></i> <span id="episode-date">Date</span>
+                        <i data-lucide="calendar"></i> <strong style="color: var(--navy); margin-right: 0.25rem;">Date:</strong> <span id="episode-date">Date</span>
                     </div>
+                    <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 1rem;"></div>
                     <div class="meta-item">
-                        <i data-lucide="clock"></i> <span id="episode-duration">Duration</span>
+                        <i data-lucide="clock"></i> <strong style="color: var(--navy); margin-right: 0.25rem;">Duration:</strong> <span id="episode-duration">Duration</span>
                     </div>
                 </div>
 
@@ -132,15 +153,20 @@
                 </div>
 
                 <div class="episode-content">
-                    <div class="description-body" id="episode-description">
-                        <!-- Content populated by JS -->
+                    <div class="description-section">
+                        <h2 style="font-size: 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i data-lucide="info" style="color: var(--teal);"></i> Detailed Episode Description
+                        </h2>
+                        <div class="description-body" id="episode-description">
+                            <!-- Content populated by JS -->
+                        </div>
                     </div>
                     
                     <aside class="sidebar-card">
-                        <div class="glass-card" style="padding: 2.5rem; background: var(--card-grad-teal);">
+                        <div class="glass-card" style="padding: 2.5rem; background: var(--card-grad-teal); border: 1px solid rgba(42, 180, 184, 0.2);">
                             <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Ready to bring Tomo to your school?</h3>
-                            <p style="font-size: 1rem; margin-bottom: 2rem;">Join 14+ states and 10+ countries in building future-ready students.</p>
-                            <a href="index.html#signup" class="btn btn-primary" style="width: 100%;">Request a Pilot <i data-lucide="arrow-right"></i></a>
+                            <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.8;">Join 14+ states and 10+ countries in building future-ready students.</p>
+                            <a href="index.html#signup" class="btn btn-primary" style="width: 100%; background: var(--teal); border: none;">Request a Pilot <i data-lucide="arrow-right"></i></a>
                         </div>
                     </aside>
                 </div>
