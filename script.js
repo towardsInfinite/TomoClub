@@ -552,14 +552,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const signupSuccessView = document.getElementById('signup-success-view');
 
   if (mainSignupForm) {
+    // Initialize Phone Country Picker
+    const phoneInput = document.getElementById('signup-phone');
+    let iti;
+    if (phoneInput && typeof window.intlTelInput !== 'undefined') {
+      iti = window.intlTelInput(phoneInput, {
+        initialCountry: "us",
+        separateDialCode: true,
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+      });
+    }
+
     mainSignupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const formData = new FormData(mainSignupForm);
+      
+      // Get full phone number with country code if iti is initialized
+      const phoneVal = iti ? iti.getNumber() : formData.get('phone');
+      
       const data = {
         name: formData.get('name'),
         email: formData.get('email'),
-        phone: formData.get('phone'),
+        phone: phoneVal,
         message: `${formData.get('message')}${formData.get('message_extra') ? ' | Notes: ' + formData.get('message_extra') : ''}`
       };
 
@@ -574,13 +589,20 @@ document.addEventListener('DOMContentLoaded', () => {
       signupMsgContainer.style.display = 'none';
 
       try {
+        // 1. Submit to Google Sheets (Web App URL)
+        // We use the same webhook as toolkits or the specific one for signups
+        await fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        });
+
+        // 2. Submit to Vercel API (Original Logic)
         const response = await fetch('/api/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-
-        const result = await response.json();
 
         if (response.ok) {
           // Success
@@ -588,11 +610,17 @@ document.addEventListener('DOMContentLoaded', () => {
           signupSuccessView.style.display = 'block';
           if (typeof lucide !== 'undefined') lucide.createIcons();
         } else {
-          // API Error
+          // If Vercel fails but Sheets works (mode: no-cors), we might still want to show success 
+          // or at least handle the error gracefully.
+          const result = await response.json();
           throw new Error(result.error || 'Something went wrong.');
         }
       } catch (error) {
         console.error('Signup Error:', error);
+        // If it's just the Vercel API failing but we expect it to work, show error
+        // But if Sheets is the priority, we might treat it as success.
+        // Given the request, we'll keep the error display.
+        
         signupMsgContainer.style.display = 'block';
         signupMsgContainer.style.background = 'rgba(179, 65, 88, 0.1)';
         signupMsgContainer.style.color = 'var(--crimson)';

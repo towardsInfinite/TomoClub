@@ -130,6 +130,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=17">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
     <style>
         .section-header {
             display: flex !important;
@@ -147,6 +149,42 @@
         }
         .text-center {
             text-align: center !important;
+        }
+
+        /* intl-tel-input Custom Styling */
+        .iti {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        
+        .iti__country-list {
+            background-color: var(--surface) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 12px !important;
+            box-shadow: var(--shadow-lg) !important;
+            color: var(--text-main) !important;
+            z-index: 100 !important;
+        }
+
+        .iti__country:hover, .iti__country.iti__highlight {
+            background-color: rgba(42, 180, 184, 0.1) !important;
+        }
+
+        .iti__selected-dial-code {
+            color: var(--text-main) !important;
+        }
+
+        .iti__arrow {
+            border-top-color: var(--text-muted) !important;
+        }
+
+        .iti__arrow--up {
+            border-bottom-color: var(--text-muted) !important;
+        }
+
+        /* Ensure input padding doesn't break with flags */
+        #signup-phone {
+            padding-left: 52px !important;
         }
     </style>
 </head>
