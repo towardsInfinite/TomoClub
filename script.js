@@ -394,10 +394,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       filteredCards.sort((a, b) => {
-        const matchA = a.textContent.match(/Episode\s+(\d+)/i);
-        const matchB = b.textContent.match(/Episode\s+(\d+)/i);
-        const numA = matchA ? parseInt(matchA[1], 10) : 0;
-        const numB = matchB ? parseInt(matchB[1], 10) : 0;
+        const numA = parseInt(a.getAttribute('data-timestamp') || 0, 10);
+        const numB = parseInt(b.getAttribute('data-timestamp') || 0, 10);
         return sortOrder === 'latest' ? numB - numA : numA - numB;
       });
       
