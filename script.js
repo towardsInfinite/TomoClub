@@ -784,6 +784,16 @@ document.addEventListener('DOMContentLoaded', () => {
         signupSuccessView.style.display = 'block';
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
+        // Trigger automatic download of the Ebook
+        const ebookFileName = 'Leaders of Tomorrow 1 May Launch.pdf';
+        const ebookFileUrl = `./Ebook/${encodeURIComponent(ebookFileName)}`;
+        const downloadLink = document.createElement('a');
+        downloadLink.href = ebookFileUrl;
+        downloadLink.download = ebookFileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
             // Mobile Dropdown Toggle
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {

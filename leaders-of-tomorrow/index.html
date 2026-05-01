@@ -1137,6 +1137,16 @@
                         form.style.display = 'none';
                         successMsg.style.display = 'block';
                         
+                        // Trigger automatic download of the Ebook
+                        const ebookFileName = 'Leaders of Tomorrow 1 May Launch.pdf';
+                        const ebookFileUrl = `../Ebook/${encodeURIComponent(ebookFileName)}`;
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = ebookFileUrl;
+                        downloadLink.download = ebookFileName;
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+
                         // Scroll to success message
                         successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } catch (error) {
