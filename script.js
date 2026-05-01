@@ -233,11 +233,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Team Card Flip Listener
+  // Team Card Flip Listener (Optimized for Mobile)
   document.addEventListener('click', (e) => {
     const card = e.target.closest('.team-card');
     if (card) {
+      // Don't flip if clicking social links on the back
+      if (e.target.closest('.team-social-links')) {
+        return;
+      }
+      
+      // Toggle flipped class
       card.classList.toggle('flipped');
+      
+      // Close other flipped cards
+      document.querySelectorAll('.team-card.flipped').forEach(otherCard => {
+        if (otherCard !== card) {
+          otherCard.classList.remove('flipped');
+        }
+      });
+    } else if (!e.target.closest('.team-container')) {
+      // Clicked outside any card container, close all flipped cards
+      document.querySelectorAll('.team-card.flipped').forEach(card => {
+        card.classList.remove('flipped');
+      });
     }
   });
 

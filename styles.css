@@ -1807,3 +1807,14 @@ body.dark-theme .quote-card-navy p {
   /* Hide excessive decorative elements on mobile */
   .hero::after { display: none !important; }
 }
+
+/* Team Card Mobile Fixes */
+@media (max-width: 768px) {
+  .team-card {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .team-card.flipped {
+    transform: rotateY(180deg) !important;
+  }
+}
